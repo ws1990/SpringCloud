@@ -1,0 +1,27 @@
+---
+# 默认为开发环境
+spring:
+  profiles:
+    active: dev
+---
+
+# 开发环境
+spring:
+  profiles: dev
+logger:
+  path: D:/logs/springcloud/eureka
+---
+
+# 测试环境
+spring:
+  profiles: test
+logger:
+  path: /home/springcloud/logs/eureka
+---
+
+# 生产环境
+spring:
+  profiles: prod
+logger:
+  path: /home/springcloud/logs/eureka
+---
