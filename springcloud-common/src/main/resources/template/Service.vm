@@ -1,0 +1,16 @@
+package ${package_name}.service;
+
+import com.ws.springcloud.common.base.BaseService;
+import ${package_name}.dao.model.${model};
+import ${package_name}.dao.model.${model}Example;
+
+/**
+ * ${model}Service接口
+ *
+ * @author ${author}
+ * @version 1.0.0
+ * @date ${ctime}
+ */
+public interface ${model}Service extends BaseService<${model}, ${model}Example> {
+
+}

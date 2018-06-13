@@ -1,0 +1,36 @@
+package ${package_name}.service.impl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.ws.springcloud.common.annotation.BaseService;
+import com.ws.springcloud.common.base.BaseServiceImpl;
+import ${package_name}.dao.mapper.${model}Mapper;
+import ${package_name}.dao.model.${model};
+import ${package_name}.dao.model.${model}Example;
+import ${package_name}.service.${model}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * ${model}Service实现
+ *
+ * @author ${author}
+ * @version 1.0.0
+ * @date ${ctime}
+ */
+@Service
+@Transactional
+@BaseService
+public class ${model}ServiceImpl extends BaseServiceImpl<${model}Mapper, ${model}, ${model}Example> implements ${model}Service {
+
+    private static Logger logger = LoggerFactory.getLogger(${model}ServiceImpl.class);
+
+    /**
+     * 抑制告警，因为该属性通过ApplicationContextListener初始化
+     */
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private ${model}Mapper ${mapper}Mapper;
+
+}
