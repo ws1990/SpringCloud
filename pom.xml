@@ -59,6 +59,11 @@
                 <artifactId>guava</artifactId>
                 <version>25.0-jre</version>
             </dependency>
+            <dependency>
+                <groupId>com.ws.springcloud</groupId>
+                <artifactId>springcloud-common</artifactId>
+                <version>1.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

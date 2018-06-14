@@ -11,8 +11,11 @@ import java.io.FileWriter;
 import java.util.Properties;
 
 /**
- * Velocity工具类
- * @author wangsong
+ * @description
+ *
+ * @author 王松
+ * @date 2017/11/22 14:52
+ * @version 1.0
  */
 public class VelocityUtil {
 

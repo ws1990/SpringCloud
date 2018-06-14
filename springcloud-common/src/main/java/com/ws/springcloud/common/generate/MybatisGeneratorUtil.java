@@ -17,10 +17,11 @@ import java.util.regex.Pattern;
 
 
 /**
- * 代码生成类
- * Created by ZhangShuzheng on 2017/1/10.
+ * @description
  *
- * @author ws
+ * @author 王松
+ * @date 2017/11/22 14:52
+ * @version 1.0
  */
 public class MybatisGeneratorUtil {
 
@@ -92,7 +93,6 @@ public class MybatisGeneratorUtil {
             String jdbc_username,
             String jdbc_password,
             String database,
-            Map<String, String> last_insert_id_tables,
             String... forceUpdateDao) throws Exception {
         if (StringUtils.isNotBlank(author)) {
             MybatisGeneratorUtil.author = author;
@@ -116,7 +116,7 @@ public class MybatisGeneratorUtil {
         }
 
         String generatorConfig_xml = resourcesPath + "/generatorConfig.xml";
-        generateConfigXml(generatorConfig_xml, jdbc_driver, jdbc_url, jdbc_username, jdbc_password, last_insert_id_tables, tables);
+        generateConfigXml(generatorConfig_xml, jdbc_driver, jdbc_url, jdbc_username, jdbc_password, tables);
         generateMapper(generatorConfig_xml);
         generateService(tables);
         deleteFile(generatorConfig_xml);
@@ -193,7 +193,6 @@ public class MybatisGeneratorUtil {
                                           String jdbc_url,
                                           String jdbc_username,
                                           String jdbc_password,
-                                          Map<String, String> last_insert_id_tables,
                                           List<Map<String, Object>> tables) throws Exception {
         System.out.println(String.format("\n========== 开始生成generatorConfig.xml文件，路径为%s ==========", generatorConfig_xml));
         VelocityContext context = new VelocityContext();
@@ -202,7 +201,6 @@ public class MybatisGeneratorUtil {
         context.put("generator_sqlMapGenerator_targetPackage", packageName + ".dao.mapper");
         context.put("generator_javaClientGenerator_targetPackage", packageName + ".dao.mapper");
         context.put("targetProject", modulePath + "/src/main/java");
-        context.put("last_insert_id_tables", last_insert_id_tables);
         context.put("author", author);
         context.put("generator_jdbc_driver", jdbc_driver);
         context.put("generator_jdbc_url", jdbc_url.replace("&", "&amp;"));
