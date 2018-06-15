@@ -1,0 +1,46 @@
+
+
+# 开发环境
+spring:
+  profiles: dev
+redis:
+  env:
+    host: 127.0.0.1
+    port: 6379
+    password:
+---
+
+# 测试环境
+spring:
+  profiles: test
+redis:
+  env:
+    host: 127.0.0.1
+    port: 6379
+    password:
+---
+
+# 生产环境
+spring:
+  profiles: prod
+redis:
+  env:
+    host: 127.0.0.1
+    port: 6379
+    password:
+---
+
+redis:
+  host: ${redis.env.host}
+  port: ${redis.env.port}
+  timeout: 10000
+    # redis默认过期时间，单位秒
+  expire-time: 3600
+  password: ${redis.env.password}
+  pool:
+    max-active: 8
+    max-wait: 1
+    max-idle: 8
+    min-idle: 0
+
+

@@ -9,7 +9,6 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -129,7 +128,7 @@ public class MybatisGeneratorUtil {
             String jdbc_username,
             String jdbc_password,
             String database,
-            List<String> forceUpdateDaoList) throws SQLException {
+            List<String> forceUpdateDaoList) {
         List<Map<String, Object>> tables = new ArrayList<>();
 
         // 查询定制前缀项目的所有表

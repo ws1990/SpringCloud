@@ -73,8 +73,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public <T> PageInfo<T> doSelectPageInfo(Integer pageNum, Integer pageSize, ISelect select) {
-        PageInfo<T> pageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(select);
-        return pageInfo;
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(select);
     }
 
     @Override
