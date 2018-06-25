@@ -4,18 +4,22 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import redis.clients.jedis.JedisPoolConfig;
+
+import java.time.Duration;
 
 /**
  * @description 
@@ -31,35 +35,21 @@ public class RedisConfig {
     /**默认过期时间是30分钟*/
     private static final long DEFAULT_EXPIRE_TIME = 1800;
 
-    @Autowired
-    private ApplicationConfig applicationConfig;
-
-    @Bean
-    public RedisProperties redisProperties() {
-        return applicationConfig.bindPropertiesToTarget(RedisProperties.class, "redis",
-                "classpath:application-redis.yml");
-    }
-
     @Bean
     public RedisConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
-        JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(redisProperties.pool.maxIdle);
-        config.setMaxWaitMillis(redisProperties.pool.maxWait);
-        config.setMaxTotal(redisProperties.pool.maxActive);
-        config.setMinIdle(redisProperties.pool.minIdle);
-        JedisConnectionFactory factory = new JedisConnectionFactory(config);
-        factory.setTimeout(redisProperties.timeout);
-        factory.setHostName(redisProperties.host);
-        factory.setPort(redisProperties.port);
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(redisProperties.host);
+        redisStandaloneConfiguration.setPort(redisProperties.port);
         if (StringUtils.isNotBlank(redisProperties.password)) {
-            factory.setPassword(redisProperties.password);
+            redisStandaloneConfiguration.setPassword(RedisPassword.of(redisProperties.password));
         }
-
+        JedisConnectionFactory factory = new JedisConnectionFactory(redisStandaloneConfiguration);
+        factory.afterPropertiesSet();
         return factory;
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory  connectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
@@ -86,20 +76,26 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisCacheManager cacheManager(RedisTemplate<String, Object> redisTemplate, RedisProperties redisProperties) {
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
+    public RedisCacheManager cacheManager(RedisConnectionFactory factory, RedisProperties redisProperties) {
+        RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder
+                .fromConnectionFactory(factory);
+
         Long expireTime = redisProperties.expireTime;
         if (expireTime == null || expireTime <= 0) {
+            //这里可以设置一个默认的过期时间 单位是秒
             expireTime = DEFAULT_EXPIRE_TIME;
+            //TODO token之类的key的过期时间也可以在这儿设置，暂留
+            RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(expireTime));
+            builder.cacheDefaults(cacheConfiguration);
         }
-        //这里可以设置一个默认的过期时间 单位是秒
-        redisCacheManager.setDefaultExpiration(expireTime);
 
-        return redisCacheManager;
+        return builder.build();
     }
 
 
 
+    @Configuration
+    @ConfigurationProperties(prefix = "redis")
     public static class RedisProperties {
         private String host;
         private Integer port;

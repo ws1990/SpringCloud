@@ -1,5 +1,0 @@
-# 单元测试必须要有application.yml，否则无法识别profiles
-# 默认为开发环境
-spring:
-  profiles:
-    active: dev

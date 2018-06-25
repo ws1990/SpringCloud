@@ -1,6 +1,6 @@
 package com.ws.springcloud.common.generate;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
