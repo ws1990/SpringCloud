@@ -1,0 +1,46 @@
+---
+# 默认为开发环境
+spring:
+  profiles:
+    active: dev
+---
+
+# 开发环境
+spring:
+  profiles: dev
+
+jdbc:
+  database:
+    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: ws123456
+logger:
+  path: D:/logs/springcloud/auth
+eurekaServerHost: localhost
+---
+
+# 测试环境
+spring:
+  profiles: test
+jdbc:
+  database:
+    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: ws123456
+logger:
+  path: /opt/springcloud/auth
+eurekaServerHost: localhost
+---
+
+# 生产环境
+spring:
+  profiles: prod
+jdbc:
+  database:
+    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: ws123456
+logger:
+  path: /opt/springcloud/auth
+eurekaServerHost: localhost
+---

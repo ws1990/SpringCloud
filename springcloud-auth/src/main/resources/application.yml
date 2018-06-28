@@ -1,0 +1,34 @@
+server:
+  port: 8010
+  # tomcat日志
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ${logger.path}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eurekaServerHost}:8000/eureka
+
+spring:
+  application:
+    name: springcloud-auth
+  # 容器启动时立即加载servlet
+  mvc:
+    servlet:
+      load-on-startup: 1
+  # 数据库
+  datasource:
+    url: ${jdbc.database.url}
+    username: ${jdbc.database.username}
+    password: ${jdbc.database.password}
+    # 配置初始连接数
+    # 如果没有配置该值，那么程序启动的时候不会连接数据库，直到第一个请求进来的时候才会创建连接
+    druid:
+      initial-size: 1
+
+mybatis:
+    typeAliasesPackage: com.ws.springcloud.auth.dao.model
+    mapperLocations: classpath:com/ws/springcloud/auth/dao/mapper/*.xml
+    configLocation: classpath:mybatis-config.xml
