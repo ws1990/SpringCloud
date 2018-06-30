@@ -25,4 +25,9 @@ public class BaseTestController {
         return authFeignTestService.index();
     }
 
+    @GetMapping("/")
+    public String index() {
+        return "BaseTestController.Index";
+    }
+
 }

@@ -18,7 +18,8 @@ import java.security.Principal;
 public class SystemController {
 
     @GetMapping("/user/current")
-    public Principal getUser(Principal principal) {
+    public Principal current(Principal principal) {
+        System.out.println("SystemController.current：" + principal);
         return principal;
     }
 
