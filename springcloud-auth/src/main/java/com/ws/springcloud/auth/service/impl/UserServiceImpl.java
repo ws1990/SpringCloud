@@ -1,5 +1,6 @@
 package com.ws.springcloud.auth.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ws.springcloud.common.annotation.BaseService;
@@ -32,5 +33,19 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User, UserExamp
     @SuppressWarnings("all")
     @Autowired
     private UserMapper userMapper;
+
+    @Override
+    public User findByAccount(String account) {
+        if (StringUtils.isBlank(account)) {
+            return null;
+        }
+
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andAccountEqualTo(account)
+                .andIsDeleteEqualTo(false);
+
+        return selectFirstByExample(example);
+    }
 
 }

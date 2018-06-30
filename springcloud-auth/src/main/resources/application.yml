@@ -27,8 +27,14 @@ spring:
     # 如果没有配置该值，那么程序启动的时候不会连接数据库，直到第一个请求进来的时候才会创建连接
     druid:
       initial-size: 1
+  security:
+    user:
+      name: admin
+      password: 123456
 
 mybatis:
     typeAliasesPackage: com.ws.springcloud.auth.dao.model
     mapperLocations: classpath:com/ws/springcloud/auth/dao/mapper/*.xml
     configLocation: classpath:mybatis-config.xml
+
+logging.level.org.springframework.security: DEBUG

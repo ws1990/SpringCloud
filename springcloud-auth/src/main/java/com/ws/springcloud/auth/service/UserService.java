@@ -12,5 +12,10 @@ import com.ws.springcloud.auth.dao.model.UserExample;
  * @date 2018/6/25
  */
 public interface UserService extends BaseService<User, UserExample> {
-
+    /**
+     * 根据账号查找用户
+     * @param account
+     * @return
+     */
+    User findByAccount(String account);
 }

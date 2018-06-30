@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @description 
- * 
+ * auth服务器和resource服务器在一起
  * @author 王松
  * @date 2017/12/22 17:34
  * @version 1.0

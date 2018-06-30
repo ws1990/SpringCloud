@@ -18,3 +18,18 @@ spring:
   mvc:
     servlet:
       load-on-startup: 1
+
+security:
+  oauth2:
+    client:
+      clientId: springcloud-service
+      clientSecret: springcloud-service
+      accessTokenUri: http://localhost:8010/oauth/token
+      grant-type: client_credentials
+      scope: server
+    resource:
+      id: springcloud-service
+      user-info-uri: http://localhost:8010/system/user/current
+      prefer-token-info: false
+
+logging.level.org.springframework.security: DEBUG
