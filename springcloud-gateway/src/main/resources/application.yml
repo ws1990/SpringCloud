@@ -1,0 +1,45 @@
+server:
+  port: 80
+  # tomcat日志
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ${logger.path}
+
+spring:
+  application:
+    name: springcloud-gateway
+  # 容器启动时立即加载servlet
+  mvc:
+    servlet:
+      load-on-startup: 1
+
+# 注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eurekaServerHost}:8000/eureka
+
+# 业务模块路由规则
+zuul:
+  routes:
+    base:
+      path: /sc/base/**
+      serviceId: springcloud-base
+    auth:
+      path: /sc/auth/**
+      serviceId: springcloud-auth
+
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
