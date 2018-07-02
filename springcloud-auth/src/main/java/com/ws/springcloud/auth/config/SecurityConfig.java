@@ -14,6 +14,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * @description
@@ -24,6 +28,18 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
  */
 @Configuration
 public class SecurityConfig {
+
+    @Bean
+    public TokenStore jwtTokenStore(JwtAccessTokenConverter converter) {
+        return new JwtTokenStore(converter);
+    }
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        jwtAccessTokenConverter.setSigningKey("jwtSigningKey");
+        return jwtAccessTokenConverter;
+    }
 
     @Configuration
     protected static class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -45,6 +61,10 @@ public class SecurityConfig {
     protected static class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
         @Autowired
         private AuthenticationManager auth;
+        @Autowired
+        private TokenStore tokenStore;
+        @Autowired
+        private JwtAccessTokenConverter jwtAccessTokenConverter;
 
         /**
          * 安全访问配置
@@ -103,6 +123,8 @@ public class SecurityConfig {
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             System.out.println("【AuthorizationServerConfig.configure(AuthorizationServerEndpointsConfigurer endpoints)】");
             endpoints
+                    .accessTokenConverter(jwtAccessTokenConverter)
+                    .tokenStore(tokenStore)
                     .authenticationManager(auth);
         }
     }
@@ -111,6 +133,15 @@ public class SecurityConfig {
     @Configuration
     @EnableResourceServer
     protected static class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+        @Override
+        public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+//            JwtAccessTokenConverter converter = jwtAccessTokenConverter();
+//            TokenStore tokenStore = jwtTokenStore(converter);
+//            resources
+//                    .tokenStore(tokenStore);
+        }
+
         @Override
         public void configure(HttpSecurity http) throws Exception {
             System.out.println("【ResourceServerConfig.configure(HttpSecurity http)】");
