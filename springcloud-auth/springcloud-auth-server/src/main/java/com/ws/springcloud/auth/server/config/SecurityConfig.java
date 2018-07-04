@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * @description
@@ -28,18 +27,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  */
 @Configuration
 public class SecurityConfig {
-
-    @Bean
-    public TokenStore jwtTokenStore(JwtAccessTokenConverter converter) {
-        return new JwtTokenStore(converter);
-    }
-
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("jwtSigningKey");
-        return jwtAccessTokenConverter;
-    }
 
     @Configuration
     protected static class WebSecurityConfig extends WebSecurityConfigurerAdapter {

@@ -24,6 +24,13 @@
             <groupId>com.ws.springcloud</groupId>
             <artifactId>springcloud-api</artifactId>
         </dependency>
+
+        <!-- 项目内部依赖 -->
+        <dependency>
+            <groupId>com.ws.springcloud</groupId>
+            <artifactId>springcloud-auth-common</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
