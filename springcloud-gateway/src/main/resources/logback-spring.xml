@@ -80,7 +80,7 @@
     </root>
 
     <!-- 系统日志输出到sys，并且错误信息输出到error日志文件  -->
-    <logger name="com.isoftstone.zbkc.weas" level="DEBUG">
+    <logger name="com.ws.springcloud" level="INFO">
         <appender-ref ref="syslog" />
         <appender-ref ref="error" />
     </logger>
