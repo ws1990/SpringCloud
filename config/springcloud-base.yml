@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: springcloud-base
+  # 容器启动时立即加载servlet
+  mvc:
+    servlet:
+      load-on-startup: 1
+
+logging.level.org.springframework.security: DEBUG

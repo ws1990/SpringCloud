@@ -1,0 +1,4 @@
+config:
+  test:
+    commonKey: commonValue
+    key: defaultValue

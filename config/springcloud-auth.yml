@@ -1,0 +1,15 @@
+# 与环境无关的配置放在本文件中
+spring:
+  application:
+    name: springcloud-auth
+  # 容器启动时立即加载servlet
+  mvc:
+    servlet:
+      load-on-startup: 1
+
+mybatis:
+  typeAliasesPackage: com.ws.springcloud.auth.server.dao.model
+  mapperLocations: classpath:com/ws/springcloud/auth/server/dao/mapper/*.xml
+  configLocation: classpath:mybatis-config.xml
+
+logging.level.org.springframework.security: DEBUG

@@ -1,46 +1,52 @@
----
-# 默认为开发环境
+# 日志路径,logback-spring.xml会使用到
+logger:
+  path: /${user.home}/logs/auth
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ${logger.path}
+
+# 注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
+
+# 配置中心
 spring:
   profiles:
     active: dev
----
+  cloud:
+    config:
+      name: springcloud-common,springcloud-auth
+      discovery:
+        enabled: true
+        serviceId: springcloud-config
 
+
+---
 # 开发环境
 spring:
   profiles: dev
-
-jdbc:
-  database:
-    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: ws123456
-logger:
-  path: D:/logs/springcloud/auth
-eurekaServerHost: localhost
 ---
 
 # 测试环境
 spring:
   profiles: test
-jdbc:
-  database:
-    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: ws123456
-logger:
-  path: /opt/springcloud/auth
-eurekaServerHost: localhost
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
 ---
 
 # 生产环境
 spring:
   profiles: prod
-jdbc:
-  database:
-    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: ws123456
-logger:
-  path: /opt/springcloud/auth
-eurekaServerHost: localhost
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
 ---

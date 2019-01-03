@@ -1,11 +1,3 @@
-server:
-  port: 8000
-  # tomcat日志
-  tomcat:
-    accesslog:
-      enabled: true
-      directory: ${logger.path}
-
 eureka:
   instance:
     # 指定该Eureka实例的主机名

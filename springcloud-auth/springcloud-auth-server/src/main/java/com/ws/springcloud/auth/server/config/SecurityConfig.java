@@ -134,7 +134,7 @@ public class SecurityConfig {
             System.out.println("【ResourceServerConfig.configure(HttpSecurity http)】");
             http
                     .authorizeRequests()
-                    .antMatchers("/login", "/oauth/*")
+                    .antMatchers("/login", "/oauth/*", "/test/*")
                     .permitAll()
                     .and()
                     .authorizeRequests().anyRequest().authenticated();

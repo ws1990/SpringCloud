@@ -15,12 +15,13 @@
         <module>springcloud-base</module>
         <module>springcloud-api</module>
         <module>springcloud-gateway</module>
+        <module>springcloud-config</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
+        <version>2.0.6.RELEASE</version>
     </parent>
 
     <dependencyManagement>
@@ -28,7 +29,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.RELEASE</version>
+                <version>Finchley.SR2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

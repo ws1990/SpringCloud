@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>springcloud-base</artifactId>
+    <artifactId>springcloud-config</artifactId>
+
 
     <dependencies>
         <dependency>
@@ -18,22 +19,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ws.springcloud</groupId>
-            <artifactId>springcloud-api</artifactId>
-        </dependency>
-
-        <!-- 项目内部依赖 -->
-        <dependency>
-            <groupId>com.ws.springcloud</groupId>
-            <artifactId>springcloud-auth-common</artifactId>
-            <version>1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -45,5 +36,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

@@ -1,33 +1,52 @@
----
-# 默认为开发环境
+# 日志路径,logback-spring.xml会使用到
+logger:
+  path: /${user.home}/logs/base
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ${logger.path}
+
+# 注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
+
+# 配置中心
 spring:
   profiles:
     active: dev
----
+  cloud:
+    config:
+      name: springcloud-common,springcloud-base
+      discovery:
+        enabled: true
+        serviceId: springcloud-config
 
+
+---
 # 开发环境
 spring:
   profiles: dev
-
-logger:
-  path: D:/logs/springcloud/base
-eurekaServerHost: localhost
 ---
 
 # 测试环境
 spring:
   profiles: test
 
-logger:
-  path: /opt/springcloud/base
-eurekaServerHost: localhost
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
 ---
 
 # 生产环境
 spring:
   profiles: prod
 
-logger:
-  path: /opt/springcloud/base
-eurekaServerHost: localhost
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
 ---
