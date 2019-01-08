@@ -1,0 +1,56 @@
+# bootstrap.yml
+# 日志路径,logback-spring.xml会使用到
+logger:
+  path: /${user.home}/logs/auth
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ${logger.path}
+
+# 配置中心
+spring:
+  profiles:
+    active: dev
+---
+# springcloud-auth.yml
+# 与环境无关的配置放在本文件中
+spring:
+  application:
+    name: springcloud-auth
+  # 容器启动时立即加载servlet
+  mvc:
+    servlet:
+      load-on-startup: 1
+
+mybatis:
+  typeAliasesPackage: com.ws.springcloud.auth.server.dao.model
+  mapperLocations: classpath:com/ws/springcloud/auth/server/dao/mapper/*.xml
+  configLocation: classpath:mybatis-config.xml
+
+logging.level.org.springframework.security: DEBUG
+
+---
+# springcloud-auth-dev.yml
+server:
+  port: 9001
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/springcloud_auth?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+
+---
+# springcloud-common.yml
+config:
+  test:
+    commonKey: commonValue
+    key: defaultValue
+
+---
+# springcloud-common-dev.yml
+config:
+  test:
+    key: devValue
+---
