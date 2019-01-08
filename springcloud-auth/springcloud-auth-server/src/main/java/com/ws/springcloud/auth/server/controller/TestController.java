@@ -1,5 +1,7 @@
 package com.ws.springcloud.auth.server.controller;
 
+import com.ws.springcloud.auth.server.dao.model.UserExample;
+import com.ws.springcloud.auth.server.service.UserService;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ public class TestController {
 
     @Resource
     private ConfigTest configTest;
+    @Resource
+    private UserService userService;
 
     @GetMapping("/")
     public String index() {
@@ -30,6 +34,11 @@ public class TestController {
     @GetMapping("config")
     public Object getConfig() {
         return configTest;
+    }
+
+    @GetMapping("/user/list")
+    public Object userList() {
+        return userService.selectByExample(new UserExample());
     }
 
 
