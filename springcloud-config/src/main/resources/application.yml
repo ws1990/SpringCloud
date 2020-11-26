@@ -1,3 +1,13 @@
+server:
+  port: 8888
+
 spring:
   application:
     name: springcloud-config
+
+# 注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka
+

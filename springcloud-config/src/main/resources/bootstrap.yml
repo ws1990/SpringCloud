@@ -1,33 +1,17 @@
-server:
-  # 端口
-  port: 8888
-  # tomcat日志
-  tomcat:
-    accesslog:
-      enabled: true
-      directory: /${user.home}/logs/config
-
-# 注册中心
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8000/eureka
-
-
-# 默认为native和dev环境
+# 默认为本地环境
 spring:
   profiles:
-    active: native,dev
+    active: native,local # 必须指定native，否则报错
+
+---
+# 开发环境
+spring:
+  profiles: local
   cloud:
     config:
       server:
         native:
           searchLocations: file://${user.home}/code/SpringCloud/config
-
----
-# 开发环境
-spring:
-  profiles: dev
 
 ---
 # 测试环境

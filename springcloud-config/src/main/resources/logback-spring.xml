@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <!-- 多环境配置，配置项在bootstrap.yml中 -->
-    <springProperty name="logPath" source="logger.path"/>
-
     <!-- 控制台 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -12,77 +9,9 @@
         </encoder>
     </appender>
 
-    <!-- 系统默认日志-->
-    <appender name="syslog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${logPath}/sys.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 文件名：sys.2017-12-05.0.log -->
-            <fileNamePattern>${logPath}/sys.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!-- 保存期限为30天 -->
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d %p [%t] (%file:%line\)- %m%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <!-- 控制台日志输出到文件 -->
-    <appender name="output" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${logPath}/output.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 文件名：output.2017-12-05.0.log -->
-            <fileNamePattern>${logPath}/output.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!-- 保存期限为30天 -->
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d %p [%t] (%file:%line\)- %m%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <!-- 错误日志单独输出 -->
-    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${logPath}/error.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 文件名：error.2017-12-05.0.log -->
-            <fileNamePattern>${logPath}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!-- 保存期限为30天 -->
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d %p [%t] (%file:%line\)- %m%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-        <!-- 过滤级别，仅记录错误日志 -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
     <!-- 输出到控制台，且同时输出到output文件，并且错误信息同时输出到error日志文件 -->
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="output" />
-        <appender-ref ref="error" />
     </root>
-
-    <!-- 系统日志输出到sys，并且错误信息输出到error日志文件  -->
-    <logger name="com.ws.springcloud" level="INFO">
-        <appender-ref ref="syslog" />
-        <appender-ref ref="error" />
-    </logger>
 
 </configuration>
