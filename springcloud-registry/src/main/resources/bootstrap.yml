@@ -1,18 +1,14 @@
-# 日志路径,logback-spring.xml会使用到
-logger:
-  path: /${user.home}/logs/registry
-server:
-  port: 8000
-  tomcat:
-    accesslog:
-      enabled: true
-      directory: ${logger.path}
-
-# 默认为开发环境
+# 指定环境
 spring:
   profiles:
-    active: dev
+    active: local
 
+# 以下部分为各个环境不同的配置
+---
+
+# 本地开发环境
+spring:
+  profiles: local
 
 ---
 
