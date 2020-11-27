@@ -6,7 +6,7 @@ spring:
 # 以下部分为各个环境不同的配置
 ---
 
-# 本地开发环境
+# 本地开发环境，主要是忽略user和password
 spring:
   profiles: local
 
@@ -20,8 +20,7 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
-
+      defaultZone: http://localhost:8000/eureka
 ---
 
 # 集群环境peer1
@@ -37,8 +36,15 @@ eureka:
   client:
     registerWithEureka: true
     serviceUrl:
-      # TODO 替换成环境变量
-      defaultZone: http://user:ws123456@peer1:8001/eureka,http://user:ws123456@peer2:8002/eureka,http://user:ws123456@peer3:8003/eureka
+      # 通过环境变量设置用户密码
+      # 1. java命令执行的时候，加入环境变量
+      #    java -jar -Dspring.profiles.active=default -Dspring.application.json='{"eureka":{"security":{"username":"user","password":"ws123456"}}}' target/springcloud-registry.jar
+      # 2. Docker执行时加入环境变量
+      # 3. Docker打包镜像时加入环境变量
+      # 4. k8s指定环境变量
+      defaultZone: "http://${eureka.security.username}:${eureka.security.password}@peer1:8001/eureka,\
+      http://${eureka.security.username}:${eureka.security.password}@peer2:8002/eureka,\
+      http://${eureka.security.username}:${eureka.security.password}@peer3:8003/eureka"
 
 ---
 
@@ -55,8 +61,9 @@ eureka:
   client:
     registerWithEureka: true
     serviceUrl:
-      defaultZone: http://user:ws123456@peer1:8001/eureka,http://user:ws123456@peer2:8002/eureka,http://user:ws123456@peer3:8003/eureka
-
+      defaultZone: "http://${eureka.security.username}:${eureka.security.password}@peer1:8001/eureka,\
+      http://${eureka.security.username}:${eureka.security.password}@peer2:8002/eureka,\
+      http://${eureka.security.username}:${eureka.security.password}@peer3:8003/eureka"
 ---
 
 # 集群环境peer3
@@ -72,6 +79,7 @@ eureka:
   client:
     registerWithEureka: true
     serviceUrl:
-      defaultZone: http://user:ws123456@peer1:8001/eureka,http://user:ws123456@peer2:8002/eureka,http://user:ws123456@peer3:8003/eureka
-
+      defaultZone: "http://${eureka.security.username}:${eureka.security.password}@peer1:8001/eureka,\
+      http://${eureka.security.username}:${eureka.security.password}@peer2:8002/eureka,\
+      http://${eureka.security.username}:${eureka.security.password}@peer3:8003/eureka"
 ---

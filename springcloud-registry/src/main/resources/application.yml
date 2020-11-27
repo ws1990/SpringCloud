@@ -3,8 +3,8 @@ spring:
     name: eureka-server
   security:
     user:
-      name: user
-      password: ws123456
+      name: ${eureka.security.username}
+      password: ${eureka.security.password}
 
 eureka:
   client:
