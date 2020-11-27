@@ -10,22 +10,68 @@ spring:
 spring:
   profiles: local
 
+server:
+  port: 8000
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+
 ---
 
-# 开发环境
+# 集群环境peer1
 spring:
-  profiles: dev
+  profiles: peer1
+
+server:
+  port: 8001
+
+eureka:
+  instance:
+    hostname: peer1
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      # TODO 替换成环境变量
+      defaultZone: http://user:ws123456@peer1:8001/eureka,http://user:ws123456@peer2:8002/eureka,http://user:ws123456@peer3:8003/eureka
 
 ---
 
-# 测试环境
+# 集群环境peer2
 spring:
-  profiles: test
+  profiles: peer2
+
+server:
+  port: 8002
+
+eureka:
+  instance:
+    hostname: peer2
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://user:ws123456@peer1:8001/eureka,http://user:ws123456@peer2:8002/eureka,http://user:ws123456@peer3:8003/eureka
 
 ---
 
-# 生产环境
+# 集群环境peer3
 spring:
-  profiles: prod
+  profiles: peer3
+
+server:
+  port: 8003
+
+eureka:
+  instance:
+    hostname: peer3
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://user:ws123456@peer1:8001/eureka,http://user:ws123456@peer2:8002/eureka,http://user:ws123456@peer3:8003/eureka
 
 ---
